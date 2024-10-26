@@ -11,16 +11,26 @@ pool:
 
 variables:
   sshVMDetails: "htmlVM"
+  registryServiceConnection: "docker-sevice"
+  url: "devopstestsukhil.azurecr.io"
+  imagename: "sample"
 
 steps:
-- task: SSH@0
-  inputs:
-    sshEndpoint: $(sshVMDetails)
-    runOptions: commands
-    commands: |
-      echo "hi everyone" > index.html
-      sudo cp index.html /var/www/html/index.html
-      sudo systemctl restart nginx
+  - task: Docker@2
+    inputs:
+      containerRegistry: '$(registryServiceConnection)'
+      repository: '$(url)/$(imagename)'
+      command: buildAndPush
+      Dockerfile: "./Dockerfile"
+      tags: '$(Build.BuildId)'
+# - task: SSH@0
+#   inputs:
+#     sshEndpoint: $(sshVMDetails)
+#     runOptions: commands
+#     commands: |
+#       echo "hi everyone" > index.html
+#       sudo cp index.html /var/www/html/index.html
+#       sudo systemctl restart nginx
     
 
     
