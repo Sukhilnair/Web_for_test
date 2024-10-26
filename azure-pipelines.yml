@@ -18,7 +18,8 @@ steps:
     sshEndpoint: $(sshVMDetails)
     runOptions: commands
     commands: |
-      sudo echo "hi everyone" > /var/www/html/index.html
+      echo "hi everyone" > index.html
+      sudo cp index.html /var/www/html/index.html
       sudo systemctl restart nginx
     
 
