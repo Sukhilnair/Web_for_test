@@ -18,14 +18,7 @@ steps:
     sshEndpoint: $(sshVMDetails)
     runOptions: commands
     commands: |
-      echo "hello Azure user"
-      sudo apt-get update -y
-      sudo apt-get install nginx -y
-      sudo systemctl start nginx
-      sudo systemctl enable nginx
-      sudo systemctl status nginx
-      echo "hi everyone" > index.html
-      sudo cp index.html  /var/www/html/index.html
+      sudo echo "hi everyone" > /var/www/html/index.html
       sudo systemctl restart nginx
     
 
