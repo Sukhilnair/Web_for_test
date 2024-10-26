@@ -1,0 +1,32 @@
+# HTML
+# Archive your static HTML project and save it with the build record.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  sshVMDetails: "htmlVM"
+
+steps:
+- task: SSH@0
+  inputs:
+    sshEndpoint: $(sshVMDetails)
+    runOptions: commands
+    commands: |
+      echo "hello Azure user"
+      sudo apt-get update -y
+      sudo apt-get install nginx -y
+      sudo systemctl start nginx
+      sudo systemctl enable nginx
+      sudo systemctl status nginx
+      echo "hi everyone" > index.html
+      sudo cp index.html  /var/www/html/index.html
+      sudo systemctl restart nginx
+    
+
+    
